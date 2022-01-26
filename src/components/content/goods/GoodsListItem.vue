@@ -1,13 +1,11 @@
 <template>
-  <div class="goods-item">
-    <a :href="goodsItem.link">
-    <img :src="goodsItem.show.img" alt="">
+  <div class="goods-item" @click="itemClick">
+    <img :src="showImage" alt="" @load="imageLoad">
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
       <span class="price">{{goodsItem.price}}</span>
       <span class="collect">{{goodsItem.cfav}}</span>
     </div>
-    </a>
   </div>
 </template>
 
@@ -21,11 +19,31 @@ export default {
         return {}
       }
     }
+  },
+  computed: {
+    showImage() {
+      return this.goodsItem.image || this.goodsItem.show.img;
+    }
+  },
+  methods: {
+    imageLoad() {
+      this.$bus.$emit('itemImgLoad');
+
+      // if(this.$route.path.indexOf('/home')) {
+      //        this.$bus.$emit('homeItemImageLoad');
+      // } else if (this.$route.path.indexOf('/detail')) {
+      //   this.$bus.$emit('detailItemImgLoad');
+      // }
+      
+    },
+    itemClick() {
+     this.$router.push('/detail/'+this.goodsItem.iid); //实现路由跳转
+    }
   }
 }
 </script>
 
-<style>
+<style scoped>
   /* 样式这里自己写 */
     .goods-item {
     padding-bottom: 40px;
