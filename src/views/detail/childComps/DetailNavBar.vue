@@ -30,6 +30,7 @@ export default {
   methods: {
     titleClick(index) {
        this.currentIndex=index;
+       this.$emit('titleClick',index);
     },
     backClick () {
       // 回到前一个页面
